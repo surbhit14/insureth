@@ -1,10 +1,18 @@
-##insurETH
+## insurETH
 Insure Your Ether
 
 It is a platform where people can deposit their Ether for a specific period of time and accordingly if after the deposit time the price goes down they will be entitled to a certain amount of compensation.
 They are required to pay a certain amount of fee
 
 The smart contract is coded in solidity where Chainlink is used to get current Ether price using the Covalent api and the same process is done at the time of withdraw
+
+![insurETH-logos](https://user-images.githubusercontent.com/82264758/170786650-7648ea86-cc89-4da6-85c5-e81a4c50ad63.jpeg)
+
+![1](https://user-images.githubusercontent.com/82264758/170786689-81aa3754-e857-4532-ae17-14436a2e8f2c.png)
+
+![2](https://user-images.githubusercontent.com/82264758/170786716-7ccb301b-336c-40f5-b97d-e45df7d5218f.png)
+
+![3](https://user-images.githubusercontent.com/82264758/170786734-98c463f2-ae76-4c9a-9c3f-2b2459100956.png)
 
 # Getting Started with Create React App
 
