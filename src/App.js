@@ -27,7 +27,7 @@ function App() {
             console.log(insur);
             setAuthorised(true);
             let c=await insur.methods.price().call();
-            setPrice(c);
+            setPrice(c/1000);
 
 
             // Add listeners start
