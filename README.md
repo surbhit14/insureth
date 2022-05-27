@@ -1,3 +1,11 @@
+##insurETH
+Insure Your Ether
+
+It is a platform where people can deposit their Ether for a specific period of time and accordingly if after the deposit time the price goes down they will be entitled to a certain amount of compensation.
+They are required to pay a certain amount of fee
+
+The smart contract is coded in solidity where Chainlink is used to get current Ether price using the Covalent api and the same process is done at the time of withdraw
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
