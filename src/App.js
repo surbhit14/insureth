@@ -14,6 +14,10 @@ function App() {
   const [price,setPrice]=useState();
   const [dep,setDep]=useState(false);
 
+  const [depdate,setDepdate]=useState("");
+  const [depamount,setDepamount]=useState(0);
+  const [depprice,setDepprice]=useState(0);
+
   const connect = async() => {
       if (window.ethereum) {
         let web3 = new Web3(window.ethereum);
@@ -27,7 +31,7 @@ function App() {
             console.log(insur);
             setAuthorised(true);
             let c=await insur.methods.price().call();
-            setPrice(c/1000);
+            setPrice(c/100);
 
 
             // Add listeners start
@@ -55,23 +59,43 @@ function App() {
           value:amount
         }
       )
-      let options = {
-        filter: {
-            value: [],
-        },
-        fromBlock: 0
-    };
-    
-    insur.events.Deposited(options)
-        .on('data', event => console.log(event))
       setDep(true);
+  
+  }
+  let web3 = new Web3(window.ethereum);
+    const insur = new web3.eth.Contract(
+      InsuranceContract,
+      "0xb366B08749673Feeb4069f5114A7dBf592567072"
+    );
+  insur.events.Deposited()
+  .on('data', function(event){ 
+  console.log(event);
+  let x=event.returnValues;
+  console.log(x)
+  
+  setDepamount(x.qty);
+  console.log(depamount);
+  setDepdate(x.time_deposited);
+  setDepprice(x.price_at_deposit);
+  }
+  )
 
+  const withdraw = async()=>{
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    let web3 = new Web3(window.ethereum);
+    const insur = new web3.eth.Contract(
+      InsuranceContract,
+      "0xb366B08749673Feeb4069f5114A7dBf592567072"
+    );
+      await insur.methods.withdraw(amount,time).send(
+        {
+          from:accounts[0]
+        }
+      )
   }
 
 
-  useEffect(() => {
- 
-  }, []);
+
 
   return (
     <s.Screen image={_color}>
@@ -91,7 +115,7 @@ function App() {
             CONNECT YOUR WALLET
           </button>
         </s.Container>
-      ) : !dep ?(
+      ) : (!dep) ?(
         <div className="p-3">
           <div className="container text-center">
             <div className="text-white h5 my-5 text-center ">
@@ -128,9 +152,22 @@ function App() {
           </div>
         </div>
       )
-      :
+      : 
      (<div className="badge text-secondary py-4 text-center ">
      <h3 className="fw-bold text-white d-block"> You have made a deposit</h3>
+     <h4 className="fw-bold text-white d-block"> Deposit Amount: {depamount}</h4>
+     <h4 className="fw-bold text-white d-block"> Withdraw Time {depdate}</h4>
+     <h4 className="fw-bold text-white d-block"> Price at Deposit {depprice/100}</h4>
+     <button
+              className="btn btn-warning fw-bold w-100 btn-lg"
+              disabled={1}
+              onClick={(e) => {
+                e.preventDefault();
+                withdraw();
+              }}
+            >
+             WITHDRAW 🤑 
+            </button>
      </div> 
      )
           }
